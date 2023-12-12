@@ -7,12 +7,13 @@ $ brew install cargo-lambda
 $ cargo lambda new <project> --http-feature=apigw_rest
 ```
 
-### deploy
+### deploy & destroy
 ```shell
 $ export AWS_ACCESS_KEY_ID=xxx
 $ export AWS_SECRET_ACCESS_KEY=xxx
-$ cargo lambda build --release # gen binary
-$ cargo lambda deploy
+$ cargo lambda build --release #gen binary
+$ cargo lambda deploy #deploy
+$ aws lambda delete-function --function-name <lambda-func-name> #destroy
 ```
 
 ### Docs
