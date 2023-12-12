@@ -5,8 +5,9 @@
 $ brew tap cargo-lambda/cargo-lambda
 $ brew install cargo-lambda
 $ cargo lambda new <project> --http-feature=apigw_rest
+$ cargo lambda build --release # gen binary
+$ cargo lambda deploy
 ```
-
 
 ### Docs
 - setup
