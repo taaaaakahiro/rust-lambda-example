@@ -1,10 +1,16 @@
 # rust-lambda-with-opentofu
 
-### command
+### init
 ```shell
 $ brew tap cargo-lambda/cargo-lambda
 $ brew install cargo-lambda
 $ cargo lambda new <project> --http-feature=apigw_rest
+```
+
+### deploy
+```shell
+$ export AWS_ACCESS_KEY_ID=xxx
+$ export AWS_SECRET_ACCESS_KEY=xxx
 $ cargo lambda build --release # gen binary
 $ cargo lambda deploy
 ```
