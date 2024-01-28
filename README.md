@@ -12,11 +12,13 @@ $ cargo lambda new <project> --http-feature=apigw_rest
 $ export AWS_ACCESS_KEY_ID=xxx
 $ export AWS_SECRET_ACCESS_KEY=xxx
 $ cargo lambda build --release #gen binary
+$ cargo lambda build --release --arm64
 $ cargo lambda deploy #deploy
 $ aws lambda delete-function --function-name <lambda-func-name> #destroy
 ```
 
 ### Docs
+- https://github.com/awslabs/aws-lambda-rust-runtime
 - setup
   - https://developer.mamezou-tech.com/blogs/2023/03/19/aws-lambda-with-rust/ 
 - AWS

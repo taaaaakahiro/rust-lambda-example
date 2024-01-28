@@ -1,24 +1,31 @@
-use lambda_http::{run, service_fn, Body, Error, Request, RequestExt, Response};
+use lambda_http::{run, service_fn, Body, Error, Request, Response};
+use serde::Deserialize;
 
-/// This is the main body for the function.
-/// Write your code inside it.
-/// There are some code example in the following URLs:
-/// - https://github.com/awslabs/aws-lambda-rust-runtime/tree/main/examples
+#[derive(Debug, Deserialize)]
+struct TestEvent {
+    name: String,
+}
+
 async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
-    // Extract some useful information from the request
-    let who = event
-        .query_string_parameters_ref()
-        .and_then(|params| params.first("name"))
-        .unwrap_or("world");
-    let message = format!("Hello {who}, this is an AWS Lambda HTTP request");
+    // リクエストからデータを Vec<u8> として取得
+    let body_bytes = event.body().to_vec();
 
-    // Return something that implements IntoResponse.
-    // It will be serialized to the right response event automatically by the runtime
+    // Vec<u8> を文字列に変換
+    let body_str = String::from_utf8_lossy(&body_bytes);
+
+    // JSON 文字列をデシリアライズ
+    let test_event: TestEvent = serde_json::from_str(&body_str)?;
+
+    // デシリアライズしたデータを利用して処理を行う
+    let message = format!("Hello {}, this is an AWS Lambda HTTP request", test_event.name);
+
+    // レスポンスを構築
     let resp = Response::builder()
         .status(200)
         .header("content-type", "text/html")
-        .body(message.into())
+        .body(Body::from(message))
         .map_err(Box::new)?;
+
     Ok(resp)
 }
 
@@ -26,9 +33,7 @@ async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
 async fn main() -> Result<(), Error> {
     tracing_subscriber::fmt()
         .with_max_level(tracing::Level::INFO)
-        // disable printing the name of the module in every log line.
         .with_target(false)
-        // disabling time is handy because CloudWatch will add the ingestion time.
         .without_time()
         .init();
 
