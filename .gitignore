@@ -1,3 +1,7 @@
 .envrc
 
 .idea
+
+*.lock
+
+/target

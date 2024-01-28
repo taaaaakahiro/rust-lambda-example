@@ -1,14 +1,35 @@
 # rust-lambda-with-opentofu
 
-### command
+### init
 ```shell
 $ brew tap cargo-lambda/cargo-lambda
 $ brew install cargo-lambda
 $ cargo lambda new <project> --http-feature=apigw_rest
 ```
 
+### deploy & destroy
+```shell
+$ export AWS_ACCESS_KEY_ID=xxx
+$ export AWS_SECRET_ACCESS_KEY=xxx
+$ cargo lambda build --release --arm64
+$ cargo lambda deploy #deploy
+$ aws lambda delete-function --function-name <lambda-func-name> #destroy
+```
+
+### request JSON
+```json
+{
+  "body": "{\"name\":\"value1\"}",
+  "httpMethod": "POST",
+  "requestContext": {
+    "httpMethod": "POST"
+  }
+}
+
+```
 
 ### Docs
+- https://github.com/awslabs/aws-lambda-rust-runtime
 - setup
   - https://developer.mamezou-tech.com/blogs/2023/03/19/aws-lambda-with-rust/ 
 - AWS
