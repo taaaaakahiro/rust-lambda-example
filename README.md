@@ -11,10 +11,21 @@ $ cargo lambda new <project> --http-feature=apigw_rest
 ```shell
 $ export AWS_ACCESS_KEY_ID=xxx
 $ export AWS_SECRET_ACCESS_KEY=xxx
-$ cargo lambda build --release #gen binary
 $ cargo lambda build --release --arm64
 $ cargo lambda deploy #deploy
 $ aws lambda delete-function --function-name <lambda-func-name> #destroy
+```
+
+### request JSON
+```json
+{
+  "body": "{\"name\":\"value1\"}",
+  "httpMethod": "POST",
+  "requestContext": {
+    "httpMethod": "POST"
+  }
+}
+
 ```
 
 ### Docs
